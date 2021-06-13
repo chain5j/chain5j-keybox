@@ -1,0 +1,7 @@
+/.idea/*
+**/*.log
+/logs
+/go.sum
+/levelDb/
+/walletctl/wallet1.dat
+/walletctl/walletctl
