@@ -1,5 +1,5 @@
-// description: keybox 
-// 
+// description: keybox
+//
 // @author: xwc1125
 // @date: 2020/8/21 0021
 package btc
@@ -8,12 +8,13 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"strings"
+
 	"github.com/btcsuite/btcd/btcjson"
+	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcutil"
 	"github.com/chain5j/chain5j-pkg/util/hexutil"
-	"strings"
 )
 
 // WalletTx 钱包可读数据

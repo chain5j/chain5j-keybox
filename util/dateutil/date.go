@@ -1,5 +1,5 @@
-// description: keybox 
-// 
+// description: keybox
+//
 // @author: xwc1125
 // @date: 2020/8/21 0021
 package dateutil
@@ -23,9 +23,9 @@ func GetDistanceTime(diffMS int64) string {
 		diffMS = -diffMS
 	}
 	s := diffMS / 1000 // 秒
-	m := s / 60        //分钟
-	h := m / 60        //小时
-	day := h / 24      //天
+	m := s / 60        // 分钟
+	h := m / 60        // 小时
+	day := h / 24      // 天
 	hour := h - 24*day
 	min := m - h*60
 	sec := s - m*60

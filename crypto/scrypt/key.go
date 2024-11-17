@@ -19,6 +19,7 @@ package scrypt
 import (
 	"encoding/hex"
 	"encoding/json"
+
 	"github.com/pborman/uuid"
 )
 

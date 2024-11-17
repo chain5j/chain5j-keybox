@@ -2,7 +2,8 @@ package s256
 
 import (
 	"fmt"
-	"github.com/chain5j/chain5j-pkg/crypto"
+
+	"github.com/chain5j/chain5j-pkg/crypto/signature/secp256k1"
 	"github.com/chain5j/keybox/algorithm"
 )
 
@@ -14,26 +15,32 @@ func (a *Algorithm) GetPubKeyFromPriKey(priKey []byte) ([]byte, error) {
 	if len(priKey) == 0 {
 		return nil, fmt.Errorf("Chain GetPubKeyFromPriKey parameter error")
 	}
-	privateKey, err := crypto.ToECDSA(crypto.S256, priKey)
-	if err != nil {
-		return nil, err
+	cryptoS256 := secp256k1.Secp251k1{}
+	privateKey := cryptoS256.ToECDSA(priKey)
+	if privateKey == nil {
+		return nil, fmt.Errorf("private key is empty")
 	}
-	return crypto.MarshalPubkey(&privateKey.PublicKey), nil
+	return cryptoS256.MarshalPublicKey(&privateKey.PublicKey)
 }
 
 // 签名交易体Hash
 func (a *Algorithm) Sign(priKey []byte, hash []byte) (*algorithm.Signature, error) {
-	privateKey, err := crypto.ToECDSA(crypto.S256, priKey)
+	cryptoS256 := secp256k1.Secp251k1{}
+	privateKey := cryptoS256.ToECDSA(priKey)
+	if privateKey != nil {
+		return nil, fmt.Errorf("private key is empty")
+	}
+	signResult, err := cryptoS256.Sign(privateKey, hash)
 	if err != nil {
 		return nil, err
 	}
-	signResult, err := crypto.Sign(hash, privateKey)
+	marshalPublicKey, err := cryptoS256.MarshalPublicKey(&privateKey.PublicKey)
 	if err != nil {
 		return nil, err
 	}
 	return &algorithm.Signature{
-		SignBytes: signResult.Signature[:64],
-		V:         signResult.Signature[64],
-		Pubkey:    crypto.MarshalPubkey(&privateKey.PublicKey),
+		SignBytes: signResult[:64],
+		V:         signResult[64],
+		Pubkey:    marshalPublicKey,
 	}, nil
 }

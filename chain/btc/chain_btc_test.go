@@ -1,16 +1,17 @@
-// description: keybox 
-// 
+// description: keybox
+//
 // @author: xwc1125
 // @date: 2020/8/18 0018
 package btc
 
 import (
 	"fmt"
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcutil"
-	"github.com/chain5j/chain5j-pkg/util/hexutil"
 	"testing"
+
+	"github.com/btcsuite/btcd/btcec/v2"
+	"github.com/btcsuite/btcd/btcutil"
+	"github.com/btcsuite/btcd/chaincfg"
+	"github.com/chain5j/chain5j-pkg/util/hexutil"
 )
 
 func TestChain_GetAddressFromPubKey(t *testing.T) {
@@ -27,7 +28,7 @@ func TestChain_GetAddressFromPubKey(t *testing.T) {
 }
 
 func TestPrvKey(t *testing.T) {
-	privKey, err := btcec.NewPrivateKey(btcec.S256())
+	privKey, err := btcec.NewPrivateKey()
 	if err != nil {
 		panic(err)
 	}
@@ -61,7 +62,7 @@ func TestPrvKey(t *testing.T) {
 }
 
 func GenerateBTC() (string, string, error) {
-	privKey, err := btcec.NewPrivateKey(btcec.S256())
+	privKey, err := btcec.NewPrivateKey()
 	if err != nil {
 		return "", "", err
 	}
@@ -81,7 +82,7 @@ func GenerateBTC() (string, string, error) {
 }
 
 func GenerateBTCTest() (string, string, error) {
-	privKey, err := btcec.NewPrivateKey(btcec.S256())
+	privKey, err := btcec.NewPrivateKey()
 	if err != nil {
 		return "", "", err
 	}

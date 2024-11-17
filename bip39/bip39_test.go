@@ -2,8 +2,9 @@ package bip39
 
 import (
 	"encoding/hex"
-	"github.com/chain5j/keybox/bip32"
 	"testing"
+
+	"github.com/chain5j/keybox/bip32"
 )
 
 type vector struct {
@@ -28,7 +29,7 @@ func TestNewEntropy(t *testing.T) {
 	t.Logf("entropy:%v", entropy)
 	mnemonic, _ := NewMnemonic(entropy)
 	t.Logf("mnemonic:%v", mnemonic)
-	//seed := NewSeed(mnemonic, "123456")
+	// seed := NewSeed(mnemonic, "123456")
 
 }
 

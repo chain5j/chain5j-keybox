@@ -13,11 +13,11 @@ const CoinTypeBTC uint32 = 0x80000000
 const Purpose uint32 = 0x8000002C
 
 // https://github.com/satoshilabs/slips/blob/master/slip-0044.md
-//const (
+// const (
 //	TypeBTC  uint32 = 0x80000000
 //	TypeETH  uint32 = 0x8000003c
 //	TypeOMNI uint32 = 0x800000c8
-//)
+// )
 
 func NewKeyFromMnemonic(mnemonic string, coin, account, chain, address uint32) (*bip32.Key, error) {
 	seed, err := bip39.NewSeedWithErrorChecking(mnemonic, "")

@@ -1,8 +1,10 @@
 package gm2
 
 import (
+	"crypto/rand"
 	"fmt"
-	"github.com/chain5j/chain5j-pkg/crypto/gmsm"
+
+	"github.com/chain5j/chain5j-pkg/crypto/signature/gmsm"
 	"github.com/chain5j/keybox/algorithm"
 	"github.com/tjfoc/gmsm/sm2"
 )
@@ -25,7 +27,7 @@ func (a *Algorithm) Sign(priKey []byte, hash []byte) (*algorithm.Signature, erro
 		return nil, fmt.Errorf("hash is required to be exactly 32 bytes (%d)", len(hash))
 	}
 	privateKey, publicKey := gmsm.PrivKeyFromBytes(priKey)
-	r, b, err := sm2.Sign(privateKey, hash)
+	r, b, err := sm2.Sm2Sign(privateKey, hash, nil, rand.Reader)
 	if err != nil {
 		return nil, err
 	}

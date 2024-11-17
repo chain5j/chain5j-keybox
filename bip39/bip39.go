@@ -8,10 +8,11 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"github.com/chain5j/keybox/bip39/wordlists"
-	"golang.org/x/crypto/pbkdf2"
 	"math/big"
 	"strings"
+
+	"github.com/chain5j/keybox/bip39/wordlists"
+	"golang.org/x/crypto/pbkdf2"
 )
 
 var (

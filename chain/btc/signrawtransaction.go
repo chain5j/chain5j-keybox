@@ -8,13 +8,14 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"github.com/btcsuite/btcd/btcec"
+
+	"github.com/btcsuite/btcd/btcec/v2"
 	"github.com/btcsuite/btcd/btcjson"
+	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
 	"github.com/btcsuite/btcd/txscript"
 	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
 	"github.com/chain5j/chain5j-pkg/util/hexutil"
 )
 
@@ -282,7 +283,7 @@ func signTransaction(tx *wire.MsgTx, hashType txscript.SigHashType,
 
 		// Either it was already signed or we just signed it.
 		// Find out if it is completely satisfied or still needs more.
-		vm, err := txscript.NewEngine(prevOutScript, tx, i, txscript.StandardVerifyFlags, nil, nil, 0)
+		vm, err := txscript.NewEngine(prevOutScript, tx, i, txscript.StandardVerifyFlags, nil, nil, 0, nil)
 		if err == nil {
 			err = vm.Execute()
 		}

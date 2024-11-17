@@ -17,7 +17,7 @@ func TestCreateMultiSig(t *testing.T) {
 		chainParam *chaincfg.Params
 	}
 
-	//验证数据来源于  https://coinb.in/multisig/ ，以及bitcoind生成
+	// 验证数据来源于  https://coinb.in/multisig/ ，以及bitcoind生成
 	tests := []struct {
 		name    string
 		args    args

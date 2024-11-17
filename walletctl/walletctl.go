@@ -6,6 +6,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/chain5j/chain5j-pkg/util/hexutil"
 	"github.com/chain5j/keybox"
 	"github.com/chain5j/keybox/bip32"
@@ -13,7 +15,6 @@ import (
 	"github.com/chain5j/keybox/chain/btc"
 	"github.com/chain5j/keybox/chain/eth"
 	"github.com/spf13/cobra"
-	"os"
 )
 
 var (

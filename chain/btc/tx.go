@@ -1,5 +1,5 @@
-// description: keybox 
-// 
+// description: keybox
+//
 // @author: xwc1125
 // @date: 2020/8/21 0021
 package btc
@@ -10,15 +10,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"sync"
+
 	"github.com/btcsuite/btcd/btcjson"
+	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
 	"github.com/btcsuite/btcd/txscript"
 	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
 	"github.com/chain5j/keybox/chain/btc/helpers"
 	"github.com/chain5j/keybox/chain/btc/txauthor"
-	"sync"
 )
 
 // 未使用的花费
@@ -147,6 +148,7 @@ func InternalNewBTCTransaction(unSpent *BTCUnspent, amounts *BTCOutput, change *
 	tr.tx = unsignedTransaction.Tx
 	return
 }
+
 // GetFee 获取目前的费率(in BTC, not satoshi)
 // Returns the miner's fee for the current transaction
 func (tx BTCTransaction) GetFee() (float64, error) {
@@ -164,7 +166,7 @@ func (tx BTCTransaction) Encode() (string, error) {
 		return "", errors.New("transaction data not filled")
 	}
 	if err := tx.tx.BtcEncode(&buf, wire.ProtocolVersion, wire.LatestEncoding); err != nil {
-		return "", errors.New(fmt.Sprintf( "failed to encode msg of type %T", tx.tx))
+		return "", errors.New(fmt.Sprintf("failed to encode msg of type %T", tx.tx))
 	}
 	return hex.EncodeToString(buf.Bytes()), nil
 }

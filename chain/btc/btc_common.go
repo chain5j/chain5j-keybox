@@ -1,20 +1,21 @@
-// description: keybox 
-// 
+// description: keybox
+//
 // @author: xwc1125
 // @date: 2020/8/21 0021
 package btc
 
 import (
 	"fmt"
+
+	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcutil"
 )
 
 type BTCAddress struct {
 	address btcutil.Address
 }
 
-// 将地址字符串转为BTC地址
+// NewBTCAddressFromString 将地址字符串转为BTC地址
 func NewBTCAddressFromString(addr string, network string) (address *BTCAddress, err error) {
 	netParams, err := ParseNetworkToConf(network)
 	if err != nil {
