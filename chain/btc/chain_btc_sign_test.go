@@ -1,32 +1,19 @@
-// description: keybox 
-// 
+// description: keybox
+//
 // @author: xwc1125
 // @date: 2020/8/20 0020
 package btc
 
 import (
 	"fmt"
-	"github.com/btcsuite/btcutil"
+	"testing"
+
+	"github.com/btcsuite/btcd/btcutil"
 	"github.com/chain5j/chain5j-pkg/util/hexutil"
 	"github.com/chain5j/keybox/crypto/address"
-	"testing"
 )
 
 func TestTransaction(t *testing.T) {
-	/**
-	{
-	    "txid": "d1681e7b2eb6841457a80d53973237b29aa09b0f4bff8d121d7c6ae6446a99a9",
-	    "vout": 1,
-	    "address": "2Mx9f29Y4tmTztQtSKqb5Wgdjf7vqUacZ3X",
-	    "label": "",
-	    "scriptPubKey": "a91435cb0767a187e17a02eb7799045337229be7868087",
-	    "amount": 23.30000000,
-	    "confirmations": 0,
-	    "spendable": false,
-	    "solvable": false,
-	    "safe": true
-	  }
-	*/
 	// 1)添加unspent内容
 	input := new(BTCUnspent)
 	input.Add(

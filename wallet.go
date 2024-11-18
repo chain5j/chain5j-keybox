@@ -6,6 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"strconv"
+	"strings"
+	"sync"
+	"time"
+
 	"github.com/chain5j/keybox/bip32"
 	"github.com/chain5j/keybox/bip39"
 	"github.com/chain5j/keybox/bip39/wordlists"
@@ -14,11 +20,6 @@ import (
 	"github.com/chain5j/keybox/util/dateutil"
 	log "github.com/chain5j/log15"
 	"github.com/pborman/uuid"
-	"io/ioutil"
-	"strconv"
-	"strings"
-	"sync"
-	"time"
 )
 
 type ChildKeyPropertyInfo struct {

@@ -5,13 +5,14 @@
 package txauthor_test
 
 import (
+	"testing"
+
 	. "github.com/chain5j/keybox/chain/btc/txauthor"
 	"github.com/chain5j/keybox/chain/btc/txrules"
 	"github.com/chain5j/keybox/chain/btc/txsizes"
-	"testing"
 
+	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
 )
 
 func p2pkhOutputs(amounts ...btcutil.Amount) []*wire.TxOut {

@@ -3,11 +3,12 @@ package btc
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/btcsuite/btcd/btcec"
+
+	"github.com/btcsuite/btcd/btcec/v2"
+	"github.com/btcsuite/btcd/btcutil"
+	"github.com/btcsuite/btcd/btcutil/base58"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/base58"
-	"github.com/chain5j/chain5j-pkg/crypto"
+	"github.com/chain5j/chain5j-pkg/crypto/signature/secp256k1"
 	"github.com/chain5j/keybox"
 	"github.com/chain5j/keybox/algorithm/s256"
 	"github.com/chain5j/keybox/chain"
@@ -39,14 +40,14 @@ func NewChain(networkType chain.NetworkType) *Chain {
 }
 
 // 获取链信息
-func (a *Chain) ChainInfo() *keybox.ChainInfo {
-	return a.chainInfo
+func (c *Chain) ChainInfo() *keybox.ChainInfo {
+	return c.chainInfo
 }
 
 // 比特币中的netId就是PrivateKeyID[wifPrvkey]
-func (a *Chain) ExportPrivateKey(priKey []byte, isCompressPubKey bool) (string, error) {
-	privateKey, _ := btcec.PrivKeyFromBytes(btcec.S256(), priKey)
-	parseNetworkToConf, err := ParseNetworkToConf(string(a.networkType))
+func (c *Chain) ExportPrivateKey(priKey []byte, isCompressPubKey bool) (string, error) {
+	privateKey, _ := btcec.PrivKeyFromBytes(priKey)
+	parseNetworkToConf, err := ParseNetworkToConf(string(c.networkType))
 	if err != nil {
 		return "", err
 	}
@@ -58,12 +59,12 @@ func (a *Chain) ExportPrivateKey(priKey []byte, isCompressPubKey bool) (string, 
 }
 
 // 从公钥获取地址
-func (a *Chain) GetAddressFromPubKey(pubKey []byte) (string, error) {
+func (c *Chain) GetAddressFromPubKey(pubKey []byte) (string, error) {
 	if pubKey == nil || len(pubKey) == 0 {
 		return "", fmt.Errorf("pubKey is empty")
 	}
 	var netType = address.BTCMainNet
-	switch a.networkType {
+	switch c.networkType {
 	case chain.MainNet:
 		netType = address.BTCMainNet
 	case chain.TestNet:
@@ -75,13 +76,13 @@ func (a *Chain) GetAddressFromPubKey(pubKey []byte) (string, error) {
 }
 
 // 签名直接返回签名的string
-func (a *Chain) SignToStr(priKey []byte, rawTxBytes []byte) (string, error) {
-	wifPrvkey, err := a.ExportPrivateKey(priKey, false)
+func (c *Chain) SignToStr(priKey []byte, rawTxBytes []byte) (string, error) {
+	wifPrvkey, err := c.ExportPrivateKey(priKey, false)
 	fmt.Println("wifPrvkey", wifPrvkey)
 	if err != nil {
 		return "", err
 	}
-	signedRawTx, err := a.SignRawTx(hex.EncodeToString(rawTxBytes), wifPrvkey)
+	signedRawTx, err := c.SignRawTx(hex.EncodeToString(rawTxBytes), wifPrvkey)
 	if err != nil {
 		return "", err
 	}
@@ -91,18 +92,19 @@ func (a *Chain) SignToStr(priKey []byte, rawTxBytes []byte) (string, error) {
 const compressMagic byte = 0x01
 
 // 比特币中的netId就是PrivateKeyID[wifPrvkey]
-func (a *Chain) ExportPrivateKey2(priKey []byte, isCompressPubKey bool) (string, error) {
+func (c *Chain) ExportPrivateKey2(priKey []byte, isCompressPubKey bool) (string, error) {
 	encodeLen := 1 + btcec.PrivKeyBytesLen + 4
 	if isCompressPubKey {
 		encodeLen++
 	}
-	privateKey, err := crypto.ToECDSA(crypto.S256, priKey)
-	if err != nil {
-		return "", err
+	cryptoS256 := secp256k1.Secp251k1{}
+	privateKey := cryptoS256.ToECDSA(priKey)
+	if privateKey == nil {
+		return "", fmt.Errorf("private key is empty")
 	}
 
 	p := make([]byte, 0, encodeLen)
-	p = append(p, a.netId)
+	p = append(p, c.netId)
 	p = paddedAppend(btcec.PrivKeyBytesLen, p, privateKey.D.Bytes())
 	if isCompressPubKey {
 		p = append(p, compressMagic)

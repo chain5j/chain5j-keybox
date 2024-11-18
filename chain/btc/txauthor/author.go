@@ -7,14 +7,15 @@ package txauthor
 
 import (
 	"errors"
+
 	"github.com/chain5j/keybox/chain/btc/helpers"
 	"github.com/chain5j/keybox/chain/btc/txrules"
 	"github.com/chain5j/keybox/chain/btc/txsizes"
 
+	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcd/txscript"
 	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
 )
 
 // InputSource provides transaction inputs referencing spendable outputs to
@@ -192,7 +193,7 @@ func AddAllInputScripts(tx *wire.MsgTx, prevPkScripts [][]byte, inputValues []bt
 	secrets SecretsSource) error {
 
 	inputs := tx.TxIn
-	hashCache := txscript.NewTxSigHashes(tx)
+	hashCache := txscript.NewTxSigHashes(tx, nil)
 	chainParams := secrets.ChainParams()
 
 	if len(inputs) != len(prevPkScripts) {

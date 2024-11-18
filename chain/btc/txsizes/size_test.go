@@ -3,8 +3,9 @@ package txsizes_test
 import (
 	"bytes"
 	"encoding/hex"
-	. "github.com/chain5j/keybox/chain/btc/txsizes"
 	"testing"
+
+	. "github.com/chain5j/keybox/chain/btc/txsizes"
 
 	"github.com/btcsuite/btcd/wire"
 )

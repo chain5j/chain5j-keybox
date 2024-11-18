@@ -35,7 +35,7 @@ func TestKeyEncryptDecrypt(t *testing.T) {
 		t.Fatal(err)
 	}
 	password := ""
-	//address,_ := hex.DecodeString("0x45dea0fb0bba44f4fcf290bba71fd57d7117cbb8")
+	// address,_ := hex.DecodeString("0x45dea0fb0bba44f4fcf290bba71fd57d7117cbb8")
 
 	// Do a few rounds of decryption and encryption
 	for i := 0; i < 3; i++ {
@@ -48,9 +48,9 @@ func TestKeyEncryptDecrypt(t *testing.T) {
 		if err != nil {
 			t.Fatalf("test %d: json key failed to decrypt: %v", i, err)
 		}
-		//if key.Address != address {
+		// if key.Address != address {
 		//	t.Errorf("test %d: key address mismatch: have %x, want %x", i, key.Address, address)
-		//}
+		// }
 		// Recrypt with a new password and start over
 		password += "new data appended"
 		if keyjson, err = EncryptKey(key, password, veryLightScryptN, veryLightScryptP); err != nil {
@@ -62,7 +62,7 @@ func TestKeyEncryptDecrypt(t *testing.T) {
 func TestEncryptKey(t *testing.T) {
 	prvKey, _ := hex.DecodeString("0ddb327ad1059662da1f02f1b8521bf0f69cf5cecc09a4d8fc7f928fc9726818")
 	k := &Key{
-		//Address:    addr,
+		// Address:    addr,
 		PrivateKey: prvKey,
 	}
 	keyJson, err := EncryptKey(k, "123456", veryLightScryptN, veryLightScryptP)

@@ -2,13 +2,14 @@ package bip44
 
 import (
 	"encoding/json"
+	"testing"
+
 	"github.com/chain5j/keybox/bip32"
 	"github.com/chain5j/keybox/bip39"
-	"testing"
 )
 
 func Test_NewKeyFromMnemonic(t *testing.T) {
-	seed, err := bip39.NewSeedWithErrorChecking("gorilla easy one advance lesson name math clog awake private aerobic canvas kidney attend food amazing upper interest chicken shadow hip giraffe food curious", "")
+	seed, err := bip39.NewSeedWithErrorChecking("fragile disorder legal weapon depend sunny detail lens expect fresh dutch blur", "")
 	if err != nil {
 		t.Log(err)
 	}
@@ -25,7 +26,7 @@ func Test_NewKeyFromMnemonic(t *testing.T) {
 
 	t.Log(string(key))
 
-	xkey, _ := NewKeyFromMasterKey(masterKey, 0, 0, 0, 2)
+	xkey, _ := NewKeyFromMasterKey(masterKey, 1, 0, 0, 0)
 	t.Log(bip32.JsonString(xkey))
 
 }
